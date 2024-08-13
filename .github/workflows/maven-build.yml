@@ -92,8 +92,8 @@ jobs:
       - name: Verify JAR file
         run: |
           echo "Verifying JAR file presence..."
-          ls -al /home/zeeshan/GITHUB/spring-petclinic/target/
-          if [ -z "$(find /home/zeeshan/GITHUB/spring-petclinic/target/ -name 'spring-petclinic-3.3.0-SNAPSHOT.jar')" ]; then
+          ls -al /home/zeeshan/spring-petclinic/target/
+          if [ -z "$(find /home/zeeshan/spring-petclinic/target/ -name 'spring-petclinic-3.3.0-SNAPSHOT.jar')" ]; then
             echo "JAR file not found in target directory!"
             exit 1
           fi
@@ -115,7 +115,7 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
           echo "Deploying application to $DEPLOY_SERVER"
-          scp -i ~/.ssh/id_rsa /home/zeeshan/GITHUB/spring-petclinic/target/spring-petclinic-3.3.0-SNAPSHOT.jar $DEPLOY_USER@$DEPLOY_SERVER:/home/zeeshan/spring-petclinic/
+          scp -i ~/.ssh/id_rsa /home/zeeshan/spring-petclinic/target/spring-petclinic-3.3.0-SNAPSHOT.jar $DEPLOY_USER@$DEPLOY_SERVER:/home/zeeshan/spring-petclinic/
           ssh -i ~/.ssh/id_rsa $DEPLOY_USER@$DEPLOY_SERVER "nohup java -jar /home/zeeshan/spring-petclinic/spring-petclinic-3.3.0-SNAPSHOT.jar > /dev/null 2>&1 &"
           rm -f ~/.ssh/id_rsa
 
